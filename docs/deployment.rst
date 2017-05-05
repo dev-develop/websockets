@@ -95,7 +95,7 @@ perhaps after executing some cleanup logic.
 
 The proper way to do this is to call the ``close()`` method of the object
 returned by :func:`~websockets.server.serve`, then wait for ``wait_closed()``
-to complete.
+to complete. Using it as a context manager take cares of this automatically.
 
 Tasks that handle connections will be cancelled, in the sense that
 :meth:`~websockets.protocol.WebSocketCommonProtocol.recv` raises
@@ -106,6 +106,11 @@ On Unix systems, shutdown is usually triggered by sending a signal.
 Here's a full example (Unix-only):
 
 .. literalinclude:: ../example/shutdown.py
+
+``async`` and ``await`` aren't available in Python < 3.5. Here's how to adapt
+the example for older Python versions.
+
+.. literalinclude:: ../example/oldshutdown.py
 
 It's more difficult to achieve the same effect on Windows. Some third-party
 projects try to help with this problem.
